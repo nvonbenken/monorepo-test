@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pilet debug packages/app*",
     "build": "lerna run build",
-    "build:shell": "lerna run build --stream --scope app-shell",
+    "build:shell": "lerna run build --stream --scope shell",
     "build:pilets": "lerna run build --scope app*",
     "postinstall": "lerna run declaration",
     "test": "echo \"Error: no test specified\" && exit 1"
