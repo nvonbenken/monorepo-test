@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "lib": ["dom", "es2018"],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "jsx": "react",
+    "importHelpers": true
+  },
+  "include": [
+    "/home/nvonbenken/source/monorepo-shells/piral-lerna/packages/shell/src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
