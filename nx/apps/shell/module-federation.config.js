@@ -1,11 +1,14 @@
-// @ts-check
+const coreLibraries = new Set(['react', 'react-dom', 'react-router-dom']);
 
-/**
- * @type {import('@nrwl/devkit').ModuleFederationConfig}
- **/
-const moduleFederationConfig = {
+module.exports = {
   name: 'shell',
   remotes: ['app1', 'app2'],
-};
+  shared: (libraryName, defaultConfig) => {
+    if (coreLibraries.has(libraryName)) {
+      return defaultConfig;
+    }
 
-module.exports = moduleFederationConfig;
+    // Returning false means the library is not shared.
+    return false;
+  },
+};
