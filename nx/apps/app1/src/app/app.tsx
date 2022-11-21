@@ -6,10 +6,12 @@ export function App() {
     setCount((prev) => prev + 1);
   };
   return (
-    <>
+    <div>
       <p>{count}</p>
-      <input type="button" value="Increment" onClick={handleClick} />
-    </>
+      <div>
+        <input type="button" value="Increment" onClick={handleClick} />
+      </div>
+    </div>
   );
 }
 

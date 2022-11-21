@@ -1,12 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { useSelector } from 'react-redux';
 
 export function App() {
+  const { selectedAccount } = useSelector((state: any) => state.global);
+  console.log(selectedAccount);
   return (
     <>
-      <NxWelcome title="app2" />
-      <div />
+      <p>Global State Data: </p>
+      <p>{selectedAccount.name}</p>
     </>
   );
 }

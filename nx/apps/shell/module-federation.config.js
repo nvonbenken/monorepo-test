@@ -1,4 +1,10 @@
-const coreLibraries = new Set(['react', 'react-dom', 'react-router-dom']);
+const coreLibraries = new Set([
+  'react',
+  'react-dom',
+  'react-router-dom',
+  'react-redux',
+  '@reduxjs/toolkit',
+]);
 
 module.exports = {
   name: 'shell',
