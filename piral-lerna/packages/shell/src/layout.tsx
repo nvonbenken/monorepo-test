@@ -1,54 +1,36 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { ComponentsState, ErrorComponentsState, Menu, Notifications, SwitchErrorInfo, MenuItemProps } from 'piral';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import {
+  ComponentsState,
+  ErrorComponentsState,
+  Menu,
+  Notifications,
+  SwitchErrorInfo,
+  MenuItemProps,
+  createInstance,
+} from "piral";
 
-const MenuItem: React.FC<MenuItemProps> = ({ children }) => <li className="nav-item">{children}</li>;
-
-const defaultTiles = (
-  <>
-    <div className="tile rows-2 cols-2">
-      <div className="teaser">
-        <a href="https://piral.io/">Piral</a>
-        <br />
-        for next generation portals
-      </div>
-    </div>
-    <div className="tile rows-2 cols-2">
-      <div className="teaser">
-        <a href="https://www.typescriptlang.org/">TypeScript</a>
-        <br />
-        for writing scalable web apps
-      </div>
-    </div>
-    <div className="tile rows-2 cols-2">
-      <div className="teaser">
-        <a href="https://reactjs.org/">React</a>
-        <br />
-        for building components
-      </div>
-    </div>
-    <div className="tile rows-2 cols-2">
-      <div className="teaser">
-        <a href="http://getbootstrap.com/">Bootstrap</a>
-        <br />
-        for layout and styling
-      </div>
-    </div>
-    <div className="tile rows-2 cols-2">
-      <div className="teaser">
-        <a href="https://sass-lang.com">Sass</a>
-        <br />
-        for crafting custom styles
-      </div>
-    </div>
-  </>
+const MenuItem: React.FC<MenuItemProps> = ({ children }) => (
+  <li className="nav-item">{children}</li>
 );
+
+const defaultTiles = <></>;
 
 const defaultMenuItems = (
   <>
     <MenuItem type="general" meta={{}}>
       <Link className="nav-link text-dark" to="/not-found">
-        Not Found
+        Knowledge
+      </Link>
+    </MenuItem>
+    <MenuItem type="general" meta={{}}>
+      <Link className="nav-link text-dark" to="/not-found">
+        Support
+      </Link>
+    </MenuItem>
+    <MenuItem type="general" meta={{}}>
+      <Link className="nav-link text-dark" to="/not-found">
+        Account Name
       </Link>
     </MenuItem>
   </>
@@ -57,7 +39,9 @@ const defaultMenuItems = (
 export const errors: Partial<ErrorComponentsState> = {
   not_found: () => (
     <div>
-      <p className="error">Could not find the requested page. Are you sure it exists?</p>
+      <p className="error">
+        Could not find the requested page. Are you sure it exists?
+      </p>
       <p>
         Go back <Link to="/">to the dashboard</Link>.
       </p>
@@ -72,59 +56,64 @@ export const layout: Partial<ComponentsState> = {
       <SwitchErrorInfo {...props} />
     </div>
   ),
-  DashboardContainer: ({ children }) => (
-    <div>
-      <h1>Hello, world!</h1>
-      <p>Welcome to your new microfrontend app shell, built with:</p>
-      <div className="tiles">
-        {defaultTiles}
-        {children}
+  DashboardContainer: ({ children }) => {
+    const instance = createInstance();
+    return (
+      <div>
+        <input
+          type="button"
+          value="Set value"
+          onClick={() => instance.root.setData("foo", "bar")}
+        />
+        <div className="tiles">
+          {defaultTiles}
+          {children}
+        </div>
       </div>
-    </div>
+    );
+  },
+  DashboardTile: ({ columns, rows, children }) => (
+    <div className={`tile cols-${columns} rows-${rows}`}>{children}</div>
   ),
-  DashboardTile: ({ columns, rows, children }) => <div className={`tile cols-${columns} rows-${rows}`}>{children}</div>,
   Layout: ({ children }) => (
     <div>
       <Notifications />
-      <Menu type="general" />
-      <div className="container">{children}</div>
+      <div style={{ display: "flex" }}>
+        <Menu type="general" />
+        <div className="container" style={{ marginTop: "40px" }}>
+          {children}
+        </div>
+      </div>
     </div>
   ),
   MenuContainer: ({ children }) => {
     const [collapsed, setCollapsed] = React.useState(true);
     return (
-      <header>
-        <nav className="navbar navbar-light navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3">
-          <div className="container">
-            <Link className="navbar-brand" to="/">
-              Piral
-            </Link>
-            <button
-              aria-label="Toggle navigation"
-              type="button"
-              onClick={() => setCollapsed(!collapsed)}
-              className="navbar-toggler mr-2">
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div
-              className={`collapse navbar-collapse d-sm-inline-flex flex-sm-row-reverse ${collapsed ? '' : 'show'}`}
-              aria-expanded={!collapsed}>
-              <ul className="navbar-nav flex-grow">
-                {children}
-                {defaultMenuItems}
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
+      <div style={{ width: "250px" }}>
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            Piral
+          </Link>
+          <ul className="flex-grow" style={{ listStyle: "none" }}>
+            {children}
+          </ul>
+          <ul className="flex-grow" style={{ listStyle: "none" }}>
+            {defaultMenuItems}
+          </ul>
+        </div>
+      </div>
     );
   },
   MenuItem,
-  NotificationsHost: ({ children }) => <div className="notifications">{children}</div>,
+  NotificationsHost: ({ children }) => (
+    <div className="notifications">{children}</div>
+  ),
   NotificationsToast: ({ options, onClose, children }) => (
     <div className={`notification-toast ${options.type}`}>
       <div className="notification-toast-details">
-        {options.title && <div className="notification-toast-title">{options.title}</div>}
+        {options.title && (
+          <div className="notification-toast-title">{options.title}</div>
+        )}
         <div className="notification-toast-description">{children}</div>
       </div>
       <div className="notification-toast-close" onClick={onClose} />
