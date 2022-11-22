@@ -7,7 +7,7 @@ import {
   Notifications,
   SwitchErrorInfo,
   MenuItemProps,
-  createInstance,
+  useGlobalStateContext,
 } from "piral";
 
 const MenuItem: React.FC<MenuItemProps> = ({ children }) => (
@@ -57,13 +57,16 @@ export const layout: Partial<ComponentsState> = {
     </div>
   ),
   DashboardContainer: ({ children }) => {
-    const instance = createInstance();
+    const context = useGlobalStateContext();
+    const [api] = Object.values(context.apis);
     return (
       <div>
         <input
           type="button"
           value="Set value"
-          onClick={() => instance.root.setData("foo", "bar")}
+          onClick={() =>
+            api.setData("account", { id: "12345", name: "Test Account" })
+          }
         />
         <div className="tiles">
           {defaultTiles}
